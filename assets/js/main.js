@@ -599,3 +599,5 @@ const obj2 = {
 function newFeature() {
   return newFeature;
 }
+
+function loginFeature() {}
