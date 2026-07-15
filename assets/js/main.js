@@ -589,3 +589,4 @@ function showResult() {
 }  
 
 console.log(showResult());
+const obj2 = {name: 'Duy', info: {phone: 01234, email: 'Duy088pham@gmail.com'}}
