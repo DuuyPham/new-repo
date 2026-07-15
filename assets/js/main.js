@@ -595,3 +595,7 @@ const obj2 = {
 };
 
 // Mới vừa thêm commit
+
+function newFeature() {
+  return newFeature;
+}
