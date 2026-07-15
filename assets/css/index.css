@@ -1,0 +1,44 @@
+body {
+  display: flex;
+  height: 100vh;
+}
+
+#app {
+  margin: auto;
+}
+
+.badge.badge-in {
+  /* display: inline; */
+  color: #75ba75;
+  background: #e9f1db;
+}
+
+.badge.badge-out {
+  /* display: inline; */
+  color: #925457;
+  background: #f5eced;
+}
+
+.highlight {
+  background-color: #dba2aa;
+}
+
+.products {
+  min-width: 500px;
+  padding: 30px;
+  border-radius: 6px;
+  background: #a1c6ff;
+}
+
+.products__search {
+  text-align: right;
+  padding: 10px 0;
+}
+
+#table-add {
+  width: 100%;
+}
+
+#label-row {
+  text-align: center;
+}
