@@ -582,3 +582,10 @@ function cleanData(API) {
 }
 
 console.log(cleanData(apiResponse));
+function showResult() {
+  const myArr = [1,2,3,[4,5]]
+  const flat = myArr.flatMap(arr => arr)
+  return flat
+}  
+
+console.log(showResult());
