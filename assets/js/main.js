@@ -583,23 +583,3 @@ function cleanData(API) {
 
 console.log(cleanData(apiResponse));
 
-function showResult() {
-  const myArr = [1, 2, 3, [4, 5]];
-  const flat = myArr.flatMap((arr) => arr);
-  return flat;
-}
-
-console.log(showResult());
-const obj2 = {
-  name: "Duy",
-  info: { phone: 01234, email: "Duy088pham@gmail.com" },
-};
-
-// Mới vừa thêm commit
-
-function newFeature() {
-  return newFeature;
-}
-
-function loginFeature() {}
-
