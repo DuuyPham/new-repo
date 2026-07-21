@@ -6,56 +6,48 @@
     <title>Initial Data</title>
     <link rel="stylesheet" href="./assets/css/index.css" />
   </head>
+
   <body>
     <div id="app">
-      <div class="products">
-        <table id="table-add">
-          <thead id="head-label">
-            <tr id="label-row">
-              <td class="label label-Name">Name</td>
-              <td class="label label-Caterogy">Category</td>
-              <td class="label label-Price">Price</td>
-              <td class="label label-Quantity">Quantity</td>
-            </tr>
-          </thead>
-          <tbody>
-            <tr id="input-row">
-              <td><input type="text" name="" id="" /></td>
-              <td><input type="text" name="" id="" /></td>
-              <td><input type="text" name="" id="" /></td>
-              <td><input type="text" name="" id="" /></td>
-              <td>
-                <button
-                  style="
-                    margin-left: 12px;
-                    padding: 2px 8px;
-                    background-color: cornflowerblue;
-                  "
-                >
-                  Add
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <table id="product-table">
-          <div class="products__search">
-            <input type="text" placeholder="Type to search" id="search-input" />
-            <select name="" id="option-input"></select>
+      <div class="add-container">
+        <div class="create-block">
+          <div class="header">
+            <h2 class="header-title">New Employee</h2>
           </div>
-          <thead id="product-head">
-            <tr>
-              <th>ID</th>
-              <th>Tên sản phẩm</th>
-              <th>Danh mục</th>
-              <th>Giá (VNĐ)</th>
-              <th>Tồn kho</th>
-              <th>SL</th>
-            </tr>
-          </thead>
-          <tbody id="product-body"></tbody>
-          <tfoot id="product-foot"></tfoot>
-        </table>
+          <div class="body">
+            <form action="" id="form">
+              <div class="form-group">
+                <label for="">Name</label>
+                <input type="text" name="name" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label for="">Department</label>
+                <input type="text" name="department" class="form-control" />
+              </div>
+              <button class="createBtn">Create</button>
+            </form>
+          </div>
+        </div>
+        <div class="employee-container">
+          <table>
+            <thead class="employee-header">
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Modify</th>
+              </tr>
+            </thead>
+            <tbody class="employee-list">
+              <!-- <tr>
+                <td>EMP0001</td>
+                <td>Duy Pham</td>
+                <td>IT</td>
+              </tr> -->
+            </tbody>
+            <tfoot class="tfooter"></tfoot>
+          </table>
+        </div>
       </div>
     </div>
     <script src="./assets/js/main.js"></script>

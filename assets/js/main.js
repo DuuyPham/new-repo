@@ -581,5 +581,463 @@ function cleanData(API) {
   return Output;
 }
 
-console.log(cleanData(apiResponse));
+// console.log(cleanData(apiResponse))
 
+const users = [
+  {
+    id: 1,
+    name: "Duy Pham",
+  },
+  {
+    id: 2,
+    name: "Client",
+  },
+];
+
+const comments = [
+  {
+    id: 1,
+    user_id: 1,
+    content: "Có video chưa anh ơi",
+  },
+  {
+    id: 2,
+    user_id: 2,
+    content: "Cuối tuần mới có nha em ơi",
+  },
+  {
+    id: 3,
+    user_id: 1,
+    content: "Dạ anh",
+  },
+];
+
+// Fake API
+function getComments() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      // resolve trả về danh sách comments
+      resolve(comments);
+    }, 1000);
+  });
+}
+
+function getUsersByIds(userIds) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const Result = users.filter((user) => userIds.includes(user.id));
+      resolve(Result);
+    }, 1000);
+  });
+}
+
+getComments()
+  .then((comments) => {
+    const userIds = comments.map((comment) => comment.user_id);
+    return getUsersByIds(userIds).then((users) => {
+      return {
+        users,
+        comments,
+      };
+    });
+  })
+  .then((data) => {
+    const CmtBlock = document.getElementById("comment-block");
+    let html = "";
+    data.comments.forEach((comment) => {
+      let user = data.users.find((user) => user.id === comment.user_id);
+      html += `<li>${user.name}: ${comment.content}</li>`;
+    });
+    // CmtBlock.innerHTML = html;
+  });
+
+const courseAPI = "http://localhost:3000/Courses";
+
+function start() {
+  getCourseApi(renderCourses);
+  handleCreateForm();
+}
+
+// get Courses
+function getCourseApi(callback) {
+  fetch(courseAPI)
+    .then((res) => res.json())
+    .then(callback)
+    .catch((err) => alert(err));
+}
+
+// // render Courses
+// function renderCourses(courses) {
+//   const courseList = document.querySelector("#course-list");
+//   const htmls = courses.map(
+//     (course) =>
+//       `
+//     <li class = "course-item-${course.id}">
+//       <h2>${course.title}</h2>
+//       <p>${course.description}</p>
+//       <button data-id = "${course.id}" data-title = "${course.title}" data-description = "${course.description}" class = "deleteBtn">Xóa</button>
+//       <button data-id = "${course.id}" data-title = "${course.title}" data-description = "${course.description}" class = "editBtn">Sửa</button>
+//     </li>
+//     `,
+//   );
+//   courseList.innerHTML = htmls.join("");
+
+//   // params for edit Course
+//   document.querySelectorAll(".editBtn").forEach((btn) => {
+//     btn.onclick = () => {
+//       handleEditClick(btn.dataset);
+//     };
+//   });
+//   // params for delete Course
+//   document.querySelectorAll(".deleteBtn").forEach((btn) => {
+//     btn.onclick = () => {
+//       handleDeleteCourse(`${btn.dataset.id}`);
+//     };
+//   });
+// }
+
+// // create Form
+// function handleCreateForm() {
+//   const createBtn = document.querySelector("#create");
+//   createBtn.onclick = () => {
+//     const title = document.querySelector("input[name=title]").value;
+//     const description = document.querySelector(
+//       "textarea[name=description]",
+//     ).value;
+
+//     if (!title.trim() || !description.trim()) {
+//       alert("Vui lồng nhập đầy đủ title và description");
+//       return;
+//     } else {
+//       const data = {
+//         title,
+//         description,
+//       };
+
+//       if (editingId) {
+//         updateCourse(editingId, data, () => {
+//           getCourseApi(renderCourses);
+//           resetForm();
+//         });
+//       } else {
+//         createCourse(data, () => {
+//           getCourseApi(renderCourses);
+//           resetForm();
+//         });
+//       }
+//     }
+//   };
+// }
+
+// // create Course
+// function createCourse(data, callback) {
+//   fetch(courseAPI, {
+//     method: "POST",
+//     headers: { "Content-Type": "application/json" },
+//     body: JSON.stringify(data),
+//   })
+//     .then((res) => res.json())
+//     .then(callback)
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// }
+
+// function handleDeleteCourse(id) {
+//   fetch(courseAPI + "/" + id, {
+//     method: "DELETE",
+//     headers: { "Content-Type": "application/json" },
+//   })
+//     .then(() => {
+//       const courseItem = document.querySelector(`.course-item-${id}`);
+//       if (courseItem) {
+//         courseItem.remove();
+//       }
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// }
+
+// function resetForm() {
+//   document.querySelector("input[name=title]").value = "";
+//   document.querySelector("textarea[name=description]").value = "";
+//   document.querySelector("#create").textContent = "Tạo";
+//   editingId = null;
+// }
+
+// // flag edit or create
+// // != null is edit
+// let editingId = null;
+
+// function handleEditClick(data) {
+//   const createBtn = document.querySelector("#create");
+//   const { id, title, description } = data;
+
+//   document.querySelector("input[name=title]").value = title;
+//   document.querySelector("textarea[name=description]").value = description;
+
+//   editingId = id;
+
+//   createBtn.textContent = "Lưu";
+// }
+
+// function updateCourse(id, data, callback) {
+//   fetch(courseAPI + "/" + id, {
+//     method: "PUT",
+//     headers: { "Content-Type": "application/json" },
+//     body: JSON.stringify(data),
+//   })
+//     .then((res) => res.json())
+//     .then(callback)
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// }
+
+// start();
+
+//app quản lý nhân viên
+
+const EMP_API = "http://localhost:3000/Employees";
+
+// state
+let editingId = null;
+
+function employeeManagement() {
+  getEmployee().then(render);
+  // handleCreateEmployee();
+}
+
+// function getEmployeeApi(callback) {
+//   fetch(EMP_API, {
+//     method: "GET",
+//     headers: { "Content-Type": "application/json" },
+//   })
+//     .then((res) => res.json())
+//     .then(callback)
+//     .catch((err) => alert(err));
+// }
+
+// ----------API Function-------------
+
+// api request
+async function apiRequest(url, option = {}) {
+  const res = await fetch(url, {
+    headers: { "Content-Type": "application/json" },
+    ...option,
+  });
+
+  if (!res.ok)
+    throw new Error(`Request Failed: ${res.status} ${res.statusText}`);
+
+  // DELETE luôn trả về 204 no content -> không có body để parse sẽ throw error
+  const text = await res.text();
+  return text ? JSON.parse(text) : null;
+}
+
+// get employee
+// render từ mảng employee nên khi catch thì return [] rỗng
+function getEmployee() {
+  return apiRequest(EMP_API, { method: "GET" }).catch((err) => {
+    alert("Không tải được nhân viên: " + err.message);
+    return [];
+  });
+}
+
+async function createEmployee(dataForm) {
+  try {
+    const res = await fetch(EMP_API, {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+  } catch {
+    (err) => {
+      alert(`Tạo không thành công: ${err.message}`);
+    };
+  }
+}
+
+function handleCreateEmployee() {
+  const createBtn = document.querySelector(".createBtn");
+}
+
+function escapeHtml(str = "") {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function render(employees) {
+  const tbody = document.querySelector(".employee-list");
+  const tfoot = document.querySelector(".tfooter");
+
+  const htmls = employees.map((emp, i) => {
+    const safeName = escapeHtml(emp.name);
+    const safeDept = escapeHtml(emp.department);
+    return `<tr>
+                <td>EMP${String(i + 1).padStart(3, "0")}</td>
+                <td>${safeName}</td>
+                <td>${safeDept}</td>
+                <td>
+                <button class = "btn editBtn" data-name = ${safeName} data-department = ${safeDept}>Edit</button>
+                <button class = "btn deleteBtn" >Delete</button>
+                </td>
+              </tr>`;
+  });
+  tbody.innerHTML = htmls.join("");
+  tfoot.innerHTML = `
+              <tr>
+                <td colspan = "4">Total: ${employees.length} members</td>
+              </tr>
+  `;
+}
+
+// function createEmployee(data, callback) {
+//   fetch(EMP_API, {
+//     method: "POST",
+//     headers: { "Content-Type": "application/json" },
+//     body: JSON.stringify(data),
+//   })
+//     .then((res) => res.json())
+//     .then(callback)
+//     .catch((err) => console.log(err));
+// }
+
+// // check flag edit or create
+// let editingId = null;
+
+// function handleCreateEmployee() {
+//   const createBtn = document.querySelector(".createBtn");
+
+//   // click create button
+//   createBtn.onclick = (e) => {
+//     e.preventDefault();
+//     const name = document.querySelector("input[name=name]").value;
+//     const department = document.querySelector("input[name=department]").value;
+//     const dataForm = {
+//       name,
+//       department,
+//     };
+
+//     // check validate value form
+//     if (!name.trim() || !department.trim()) {
+//       alert("Vui lồng nhập đày đủ name và department");
+//       return;
+//     } else if (editingId) {
+//       updateEmployee(editingId, dataForm, () => {
+//         getEmployeeApi(renderEmployee);
+//         resetForm();
+//       });
+//     } else {
+//       createEmployee(dataForm, () => {
+//         getEmployeeApi(renderEmployee);
+//         resetForm();
+//       });
+//     }
+//   };
+// }
+
+// async function handleDeleteEmployee(id) {
+//   // fetch(`${EMP_API}/${id}`, {
+//   //   method: "DELETE",
+//   //   headers: { "Content-Type": "application/json" },
+//   // })
+//   //   .then(() => {
+//   //     if (!confirm("Bạn có chắc muốn xoá nhân viên này")) return;
+//   //     const EmployeeItem = document.querySelector(`.employee-${id}`);
+//   //     if (EmployeeItem) EmployeeItem.remove();
+//   //   })
+//   //   .catch((err) => alert(err));
+//   if (!confirm("Chắc chắn xoá nhân viên này ?")) return;
+//   try {
+//     const res = await fetch(`${EMP_API}/${id}`, {
+//       method: "DELETE",
+//       headers: { "Content-Type": "application/json" },
+//     });
+//     const EmployeeItem = document.querySelector(`.employee-${id}`);
+//     if (EmployeeItem) EmployeeItem.remove();
+//   } catch (err) {
+//     alert("Error:" + err.message);
+//   }
+// }
+
+// function updateEmployee(id, data, callback) {
+//   fetch(`${EMP_API}/${id}`, {
+//     method: "PUT",
+//     headers: { "Content-Type": "application/json" },
+//     body: JSON.stringify(data),
+//   })
+//     .then((res) => res.json())
+//     .then(callback)
+//     .catch((err) => alert(err));
+// }
+
+// function handleEditEmployee(data) {
+//   const { id, name, department } = data;
+//   document.querySelector("input[name=name]").value = name;
+//   document.querySelector("input[name=department]").value = department;
+
+//   editingId = id;
+//   document.querySelector(".createBtn").textContent = "Save";
+// }
+
+// function resetForm() {
+//   document.querySelector("input[name=name]").value = "";
+//   document.querySelector("input[name=department]").value = "";
+//   document.querySelector(".createBtn").textContent = "Create";
+// }
+
+// function renderEmployee(employees) {
+//   const tbody = document.querySelector(".employee-list");
+//   const tfoot = document.querySelector(".tfooter");
+//   const htmls = employees.map(
+//     (emp, index) =>
+//       ` <tr class = "employee-${emp.id}">
+//                 <td>EMP${String(index + 1).padStart(3, "0")}</td>
+//                 <td>${emp.name}</td>
+//                 <td>${emp.department}
+//                 </td>
+//                 <td>
+//                   <button class="btn editBtn" data-id="${emp.id}" data-name ="${emp.name}" data-department = "${emp.department}">Sửa</button>
+//                   <button class="btn deleteBtn" data-id="${emp.id}">Xóa</button>
+//                 </td>
+//               </tr>
+//     `,
+//   );
+
+//   const footContent = `
+//               <tr>
+//                 <td colspan = "4">Total: ${employees.length} members</td>
+//               </tr>
+//   `;
+
+//   tbody.innerHTML = htmls.join("");
+//   tfoot.innerHTML = footContent;
+
+//   document.querySelectorAll(".deleteBtn").forEach((btn) => {
+//     btn.onclick = () => {
+//       handleDeleteEmployee(btn.dataset.id);
+//     };
+//   });
+
+//   document.querySelectorAll(".editBtn").forEach((btn) => {
+//     btn.onclick = () => {
+//       handleEditEmployee(btn.dataset);
+//     };
+//   });
+// }
+
+employeeManagement();
+
+//  PUT/PATCH
+/**
+ * Tạo nút sửa
+ * autofill value vào trong 2 ô input title và description
+ * nút sửa thành nút lưu
+ * lưu trong render ra lại course và xoá value trong input
+ *
+ */
